@@ -7,8 +7,9 @@ How to control ANNs within several seconds.
 > [**Based on What We Can Control Artificial Neural Networks**]()
 
 ## 📰 News
-[2024.05.09] Fist release of code. 
-[2023.10.09] Code will be released in a few days (not too long). Please stay tuned or *watch this repo* for quick information.
+- [2024.05.09] Add denosing diffsion probabilistic models. 
+- [2024.02.18] Fist release of code. 
+- [2023.10.09] Code will be released in a few days (not too long). Please stay tuned or *watch this repo* for quick information.
 
 
 
