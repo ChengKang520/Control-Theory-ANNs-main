@@ -1,0 +1,191 @@
+#!/bin/sh
+#SBATCH --partition=amdgpu
+#SBATCH --time=24:00:00
+#SBATCH --gres=gpu:1
+#SBATCH --ntasks-per-node=1 # tasks per node
+#SBATCH --mem-per-gpu=40000
+#SBATCH --job-name=ctrlDDPM_optimiser
+#SBATCH --err=ctrlDDPM_optimiser.err
+#SBATCH --out=ctrlDDPM_optimiser.out
+#SBATCH --mail-user=kangchen@fel.cvut.cz    # where send info about job
+#SBATCH --mail-type=ALL              # what to send, valid type values are NONE, BEGIN, END, FAIL, REQUEUE, ALL
+
+/bin/hostname
+srun -l /bin/hostname
+srun -l /bin/pwd
+
+ml PyTorch/1.13.0-foss-2022a-CUDA-11.7.0
+source /home/kangchen/Controllable_AI/EnvControlAI/bin/activate
+cd /home/kangchen/Controllable_AI/DiffusionML/
+
+
+#python unconditional_DDPM.py --experiment 'default' \
+#--controller_type 'radam' \
+#--samples_path './samples/unconditional/radam/' \
+#--model_path './models/unconditional/radam/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--lr_decay_type 'None' \
+#--learning_rate 1e-4
+
+python conditional_DDPM.py --experiment 'default' \
+--controller_type 'radam' \
+--samples_path './samples/conditional/radam/' \
+--model_path './models/conditional/radam/' \
+--bsz 256 \
+--n_epoch 100 \
+--lr_decay_type 'None' \
+--learning_rate 1e-4
+
+#python unconditional_DDPM.py --experiment 'default' \
+#--controller_type 'nadam' \
+#--samples_path './samples/unconditional/nadam/' \
+#--model_path './models/unconditional/nadam/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--lr_decay_type 'None' \
+#--learning_rate 1e-4
+
+python conditional_DDPM.py --experiment 'default' \
+--controller_type 'nadam' \
+--samples_path './samples/conditional/nadam/' \
+--model_path './models/conditional/nadam/' \
+--bsz 256 \
+--n_epoch 100 \
+--lr_decay_type 'None' \
+--learning_rate 1e-4
+
+#python unconditional_DDPM.py --experiment 'default' \
+#--controller_type 'adamw' \
+#--samples_path './samples/unconditional/adamw/' \
+#--model_path './models/unconditional/adamw/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--lr_decay_type 'None' \
+#--learning_rate 1e-4
+
+python conditional_DDPM.py --experiment 'default' \
+--controller_type 'adamw' \
+--samples_path './samples/conditional/adamw/' \
+--model_path './models/conditional/adamw/' \
+--bsz 256 \
+--n_epoch 100 \
+--lr_decay_type 'None' \
+--learning_rate 1e-4
+
+
+
+
+#python unconditional_DDPM.py --experiment 'default' \
+#--controller_type 'sgd' \
+#--samples_path './samples/unconditional/sgd/' \
+#--model_path './models/unconditional/sgd/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python conditional_DDPM.py --experiment 'default' \
+#--controller_type 'sgd' \
+#--samples_path './samples/conditional/sgd/' \
+#--model_path './models/conditional/sgd/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python unconditional_DDPM.py --experiment 'default' \
+#--controller_type 'sgdm' \
+#--samples_path './samples/unconditional/sgdm/' \
+#--model_path './models/unconditional/sgdm/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python conditional_DDPM.py --experiment 'default' \
+#--controller_type 'sgdm' \
+#--samples_path './samples/conditional/sgdm/' \
+#--model_path './models/conditional/sgdm/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python unconditional_DDPM.py --experiment 'default' \
+#--controller_type 'adam' \
+#--samples_path './samples/unconditional/adam/' \
+#--model_path './models/unconditional/adam/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python conditional_DDPM.py --experiment 'default' \
+#--controller_type 'adam' \
+#--samples_path './samples/conditional/adam/' \
+#--model_path './models/conditional/adam/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python unconditional_DDPM.py --experiment 'default' \
+#--controller_type 'lpfsgd' \
+#--samples_path './samples/unconditional/lpfsgd/' \
+#--model_path './models/unconditional/lpfsgd/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python conditional_DDPM.py --experiment 'default' \
+#--controller_type 'lpfsgd' \
+#--samples_path './samples/conditional/lpfsgd/' \
+#--model_path './models/conditional/lpfsgd/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python unconditional_DDPM.py --experiment 'default' \
+#--controller_type 'hpfsgd' \
+#--samples_path './samples/unconditional/hpfsgd/' \
+#--model_path './models/unconditional/hpfsgd/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python conditional_DDPM.py --experiment 'default' \
+#--controller_type 'hpfsgd' \
+#--samples_path './samples/conditional/hpfsgd/' \
+#--model_path './models/conditional/hpfsgd/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python unconditional_DDPM.py --experiment 'default' \
+#--controller_type 'pid' \
+#--samples_path './samples/unconditional/pid/' \
+#--model_path './models/unconditional/pid/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python conditional_DDPM.py --experiment 'default' \
+#--controller_type 'pid' \
+#--samples_path './samples/conditional/pid/' \
+#--model_path './models/conditional/pid/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python unconditional_DDPM.py --experiment 'default' \
+#--controller_type 'fuzzypid' \
+#--samples_path './samples/unconditional/fuzzypid/' \
+#--model_path './models/unconditional/fuzzypid/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+#
+#python conditional_DDPM.py --experiment 'default' \
+#--controller_type 'fuzzypid' \
+#--samples_path './samples/conditional/fuzzypid/' \
+#--model_path './models/conditional/fuzzypid/' \
+#--bsz 256 \
+#--n_epoch 100 \
+#--learning_rate 1e-4
+
+

@@ -1,0 +1,119 @@
+#!/bin/sh
+#SBATCH --partition=amdgpu
+#SBATCH --time=24:00:00
+#SBATCH --gres=gpu:1
+#SBATCH --ntasks-per-node=1 # tasks per node
+#SBATCH --mem-per-gpu=40000
+#SBATCH --job-name=ctrlDDPM_LR_4e_Decay
+#SBATCH --err=ctrlDDPM_LR_4e_Decay.err
+#SBATCH --out=ctrlDDPM_LR_4e_Decay.out
+#SBATCH --mail-user=kangchen@fel.cvut.cz    # where send info about job
+#SBATCH --mail-type=ALL              # what to send, valid type values are NONE, BEGIN, END, FAIL, REQUEUE, ALL
+
+/bin/hostname
+srun -l /bin/hostname
+srun -l /bin/pwd
+
+ml PyTorch/1.13.0-foss-2022a-CUDA-11.7.0
+source /home/kangchen/Controllable_AI/EnvControlAI/bin/activate
+cd /home/kangchen/Controllable_AI/DiffusionML/
+
+
+
+python unconditional_DDPM.py --experiment 'default' \
+--controller_type 'adam' \
+--samples_path './samples/unconditional/adam_None/' \
+--model_path './models/unconditional/adam_None/' \
+--bsz 256 \
+--n_epoch 100 \
+--learning_rate 1e-3 \
+--lr_decay_type 'None'
+
+python conditional_DDPM.py --experiment 'default' \
+--controller_type 'adam' \
+--samples_path './samples/conditional/adam_None/' \
+--model_path './models/conditional/adam_None/' \
+--bsz 256 \
+--n_epoch 100 \
+--learning_rate 1e-3 \
+--lr_decay_type 'None'
+
+
+python unconditional_DDPM.py --experiment 'default' \
+--controller_type 'adam' \
+--samples_path './samples/unconditional/adam_LinearLR_4e/' \
+--model_path './models/unconditional/adam_LinearLR_4e/' \
+--bsz 256 \
+--n_epoch 100 \
+--learning_rate 1e-4 \
+--lr_decay_type 'LinearLR'
+
+python conditional_DDPM.py --experiment 'default' \
+--controller_type 'adam' \
+--samples_path './samples/conditional/adam_LinearLR/' \
+--model_path './models/conditional/adam_LinearLR/' \
+--bsz 256 \
+--n_epoch 100 \
+--learning_rate 1e-3 \
+--lr_decay_type 'LinearLR'
+
+
+python unconditional_DDPM.py --experiment 'default' \
+--controller_type 'adam' \
+--samples_path './samples/unconditional/adam_CosineAnnealingLR/' \
+--model_path './models/unconditional/adam_CosineAnnealingLR/' \
+--bsz 256 \
+--n_epoch 100 \
+--learning_rate 1e-3 \
+--lr_decay_type 'CosineAnnealingLR'
+
+python conditional_DDPM.py --experiment 'default' \
+--controller_type 'adam' \
+--samples_path './samples/conditional/adam_CosineAnnealingLR/' \
+--model_path './models/conditional/adam_CosineAnnealingLR/' \
+--bsz 256 \
+--n_epoch 100 \
+--learning_rate 1e-3 \
+--lr_decay_type 'CosineAnnealingLR'
+
+
+python unconditional_DDPM.py --experiment 'default' \
+--controller_type 'adam' \
+--samples_path './samples/unconditional/adam_ExponentialLR/' \
+--model_path './models/unconditional/adam_ExponentialLR/' \
+--bsz 256 \
+--n_epoch 100 \
+--learning_rate 1e-3 \
+--lr_decay_type 'ExponentialLR'
+
+python conditional_DDPM.py --experiment 'default' \
+--controller_type 'adam' \
+--samples_path './samples/conditional/adam_ExponentialLR/' \
+--model_path './models/conditional/adam_ExponentialLR/' \
+--bsz 256 \
+--n_epoch 100 \
+--learning_rate 1e-3 \
+--lr_decay_type 'ExponentialLR'
+
+
+python unconditional_DDPM.py --experiment 'default' \
+--controller_type 'adam' \
+--samples_path './samples/unconditional/adam_StepLR_4e/' \
+--model_path './models/unconditional/adam_StepLR_4e/' \
+--bsz 256 \
+--n_epoch 100 \
+--learning_rate 1e-4 \
+--lr_decay_type 'StepLR'
+
+python conditional_DDPM.py --experiment 'default' \
+--controller_type 'adam' \
+--samples_path './samples/conditional/adam_StepLR_4e/' \
+--model_path './models/conditional/adam_StepLR_4e/' \
+--bsz 256 \
+--n_epoch 100 \
+--learning_rate 1e-4 \
+--lr_decay_type 'StepLR'
+
+
+
+

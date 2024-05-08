@@ -1,0 +1,90 @@
+#!/bin/sh
+#SBATCH --partition=amdgpulong
+#SBATCH --time=72:00:00
+#SBATCH --gres=gpu:1
+#SBATCH --ntasks-per-node=1 # tasks per node
+#SBATCH --mem-per-gpu=40000
+#SBATCH --job-name=NoneLR_TinyImageNet
+#SBATCH --err=NoneLR_TinyImageNet.err
+#SBATCH --out=NoneLR_TinyImageNet.out
+#SBATCH --mail-user=kangchen@fel.cvut.cz    # where send info about job
+#SBATCH --mail-type=ALL              # what to send, valid type values are NONE, BEGIN, END, FAIL, REQUEUE, ALL
+
+/bin/hostname
+srun -l /bin/hostname
+srun -l /bin/pwd
+
+ml PyTorch/1.13.0-foss-2022a-CUDA-11.7.0
+source /home/kangchen/Controllable_AI/EnvControlAI/bin/activate
+cd /home/kangchen/Controllable_AI/CNN-pytorch/
+
+
+#python cifar10_main.py \
+#--controller_type 'sgd' \
+#--model_type 'vgg19' \
+#--num_classes 200 \
+#--model_path 'models/TinyImageNet200/sgd/None/vgg19/' \
+#--bsz 128 \
+#--n_epoch 200 \
+#--learning_rate 0.01 \
+#--experiment 'None'
+#
+#python cifar10_main.py \
+#--controller_type 'sgd' \
+#--model_type 'resnet18' \
+#--num_classes 200 \
+#--model_path 'models/TinyImageNet200/sgd/None/resnet18/' \
+#--bsz 128 \
+#--n_epoch 200 \
+#--learning_rate 0.01 \
+#--experiment 'None'
+
+python cifar10_main.py \
+--controller_type 'sgd' \
+--model_type 'resnet50' \
+--num_classes 200 \
+--model_path 'models/TinyImageNet200/sgd/None/resnet50/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01 \
+--experiment 'None'
+
+python cifar10_main.py \
+--controller_type 'sgd' \
+--model_type 'resnet101' \
+--num_classes 200 \
+--model_path 'models/TinyImageNet200/sgd/None/resnet101/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01 \
+--experiment 'None'
+
+python cifar10_main.py \
+--controller_type 'sgd' \
+--model_type 'mobilenetv2' \
+--num_classes 200 \
+--model_path 'models/TinyImageNet200/sgd/None/mobilenetv2/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01 \
+--experiment 'None'
+
+python cifar10_main.py \
+--controller_type 'sgd' \
+--model_type 'efficientnet' \
+--num_classes 200 \
+--model_path 'models/TinyImageNet200/sgd/None/efficientnet/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01 \
+--experiment 'None'
+
+python cifar10_main.py \
+--controller_type 'sgd' \
+--model_type 'densenet121' \
+--num_classes 200 \
+--model_path 'models/TinyImageNet200/sgd/None/densenet121/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01 \
+--experiment 'None'

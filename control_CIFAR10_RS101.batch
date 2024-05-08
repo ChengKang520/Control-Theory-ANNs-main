@@ -1,0 +1,82 @@
+#!/bin/sh
+#SBATCH --partition=amdgpu
+#SBATCH --time=24:00:00
+#SBATCH --gres=gpu:1
+#SBATCH --ntasks-per-node=1 # tasks per node
+#SBATCH --mem-per-gpu=32000
+#SBATCH --job-name=RS101_TASK
+#SBATCH --err=RS101_TASK.err
+#SBATCH --out=RS101_TASK.out
+#SBATCH --mail-user=kangchen@fel.cvut.cz    # where send info about job
+#SBATCH --mail-type=ALL              # what to send, valid type values are NONE, BEGIN, END, FAIL, REQUEUE, ALL
+
+/bin/hostname
+srun -l /bin/hostname
+srun -l /bin/pwd
+
+ml PyTorch/1.13.0-foss-2022a-CUDA-11.7.0
+source /home/kangchen/Controllable_AI/EnvControlAI/bin/activate
+cd /home/kangchen/Controllable_AI/pytorch-mnist-CNN/
+
+python cifar10_main.py --experiment 'default' \
+--controller_type 'sgd' \
+--model_type 'resnet101' \
+--num_classes 10 \
+--model_path './models/CIFAR10/sgd/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01
+
+python cifar10_main.py --experiment 'default' \
+--controller_type 'sgdm' \
+--model_type 'resnet101' \
+--num_classes 10 \
+--model_path './models/CIFAR10/sgdm/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01
+
+python cifar10_main.py --experiment 'default' \
+--controller_type 'adam' \
+--model_type 'resnet101' \
+--num_classes 10 \
+--model_path './models/CIFAR10/adam/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01
+
+python cifar10_main.py --experiment 'default' \
+--controller_type 'pid' \
+--model_type 'resnet101' \
+--num_classes 10 \
+--model_path './models/CIFAR10/pid/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01
+
+python cifar10_main.py --experiment 'default' \
+--controller_type 'lpfsgd' \
+--model_type 'resnet101' \
+--num_classes 10 \
+--model_path './models/CIFAR10/lpfsgd/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01
+
+python cifar10_main.py --experiment 'default' \
+--controller_type 'hpfsgd' \
+--model_type 'resnet101' \
+--num_classes 10 \
+--model_path './models/CIFAR10/hpfsgd/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01
+
+python cifar10_main.py --experiment 'default' \
+--controller_type 'fuzzypid' \
+--model_type 'resnet101' \
+--num_classes 10 \
+--model_path 'models/CIFAR100/fuzzypid/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01

@@ -17,12 +17,8 @@ import torch.utils.data as data
 import os
 import argparse
 import torchvision.models as models
-from train_model import train_model
-
-
 from models import *
 # from helps import progress_bar
-
 
 
 I = 5
@@ -51,7 +47,7 @@ transform_test = transforms.Compose([
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
-    parser.add_argument('--experiment', type=str, default='no-rep', help='Choose Optimizers: SGD, SGD-M, Adam, PID')
+    # parser.add_argument('--experiment', type=str, default='no-rep', help='Choose Optimizers: SGD, SGD-M, Adam, PID')
     parser.add_argument('--model_type', type=str, default='sgd', help='')
     parser.add_argument('--controller_type', type=str, default='sgd', help='sgd, sgdm, adam, pid')
     parser.add_argument('--model_path', type=str, default=None, help='')
@@ -60,6 +56,7 @@ if __name__ == '__main__':
     parser.add_argument('--n_epoch', type=int, default=20, help='')
     parser.add_argument('--learning_rate', type=float, default=0.01, help='')
     parser.add_argument('--weight_decay', type=float, default=0.0005, help='')
+    parser.add_argument('--experiment', type=str, default='None', help='Choose Learning Rate Decay Method: LinearLR, CosineAnnealingLR, ExponentialLR')
     parser.add_argument('--resume', '-r', action='store_true', help='resume from checkpoint')
 
     args = parser.parse_args()
@@ -176,14 +173,7 @@ if __name__ == '__main__':
             net.avgpool = nn.AdaptiveAvgPool2d(1)
             net.classifier.out_features = 200
             net = net.to(device)
-
-
         net = net.to(device)
-
-        plot_train = Logger('TinyImageNet' + str(args.num_classes) + '_plot_train_' + args.model_type + '_' + args.controller_type + '.txt', title='mnist')
-        plot_train.set_names(['Epoch', 'Step', 'Loss', 'Acc'])
-        plot_test = Logger('TinyImageNet' + str(args.num_classes) + '_plot_test_' + args.model_type + '_' + args.controller_type + '.txt', title='mnist')
-        plot_test.set_names(['Epoch', 'Loss', 'Acc'])
 
     elif (args.num_classes == 10) or (args.num_classes == 100):
 
@@ -201,12 +191,6 @@ if __name__ == '__main__':
             net = efficientnet.EfficientNetB0(num_classes=args.num_classes)
         elif args.model_type == 'densenet121':
             net = densenet.DenseNet121(num_classes=args.num_classes)
-
-        plot_train = Logger('CIFAR' + str(args.num_classes) + '_plot_train_' + args.model_type + '_' + args.controller_type + '.txt', title='mnist')
-        plot_train.set_names(['Epoch', 'Step', 'Loss', 'Acc'])
-        plot_test = Logger('CIFAR' + str(args.num_classes) + '_plot_test_' + args.model_type + '_' + args.controller_type + '.txt', title='mnist')
-        plot_test.set_names(['Epoch', 'Loss', 'Acc'])
-
 
 
 
@@ -252,9 +236,32 @@ if __name__ == '__main__':
                                       D_pid=D)
 
 
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=200)
+    ##########  Learning Rate Decay Setup  ##########
+    if args.experiment == 'LinearLR':
+        scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=0.5, total_iters=200)
+    elif args.experiment == 'CosineAnnealingLR':
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=200, eta_min=0)
+    elif args.experiment == 'ExponentialLR':
+        scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
+    elif args.experiment == 'StepLR':
+        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=2, gamma=0.9)
+    elif args.experiment == 'None':
+        scheduler = optimizer
 
-    # train_model(net, args.num_classes, model_save_path, trainloader, testloader, train_sizes, test_sizes, plot_train, plot_test, criterion, optimizer, num_epochs=num_epochs)
+
+
+    if args.num_classes == 200:
+        plot_train = Logger('TinyImageNet' + str(args.num_classes) + '_plot_train_' + args.model_type + '_' + args.experiment + '.txt', title='mnist')
+        plot_train.set_names(['Epoch', 'Step', 'Loss', 'Acc'])
+        plot_test = Logger('TinyImageNet' + str(args.num_classes) + '_plot_test_' + args.model_type + '_' + args.experiment + '.txt', title='mnist')
+        plot_test.set_names(['Epoch', 'Loss', 'Acc'])
+
+    elif (args.num_classes == 10) or (args.num_classes == 100):
+        plot_train = Logger('CIFAR' + str(args.num_classes) + '_plot_train_' + args.model_type + '_' + args.experiment + '.txt', title='mnist')
+        plot_train.set_names(['Epoch', 'Step', 'Loss', 'Acc'])
+        plot_test = Logger('CIFAR' + str(args.num_classes) + '_plot_test_' + args.model_type + '_' + args.experiment + '.txt', title='mnist')
+        plot_test.set_names(['Epoch', 'Loss', 'Acc'])
+
 
     acc = []
     best_acc = 0  # best test accuracy

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" id="c73a3ce6-e44b-4fa5-8b9a-53e047815c13" port="22" customName="Controllable_AI" nameFormat="CUSTOM" useOpenSSHConfig="true">
+        <option name="customName" value="Controllable_AI" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>

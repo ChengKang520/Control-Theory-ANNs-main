@@ -1,0 +1,158 @@
+#!/bin/sh
+#SBATCH --partition=amdgpu
+#SBATCH --time=24:00:00
+#SBATCH --gres=gpu:1
+#SBATCH --ntasks-per-node=1 # tasks per node
+#SBATCH --mem-per-gpu=32000
+#SBATCH --job-name=ctrlGAN
+#SBATCH --err=ctrlGAN.err
+#SBATCH --out=ctrlGAN.out
+#SBATCH --mail-user=kangchen@fel.cvut.cz    # where send info about job
+#SBATCH --mail-type=ALL              # what to send, valid type values are NONE, BEGIN, END, FAIL, REQUEUE, ALL
+
+/bin/hostname
+srun -l /bin/hostname
+srun -l /bin/pwd
+
+ml PyTorch/1.13.0-foss-2022a-CUDA-11.7.0
+source /home/kangchen/Controllable_AI/EnvControlAI/bin/activate
+
+
+cd /home/kangchen/Controllable_AI/pytorch-mnist-GAN-master/ClassicalGAN/
+#python main.py --experiment 'default' \
+#--controller_type 'sgd' \
+#--samples_path './samples/sgd_debug/' \
+#--model_path './models/sgd/' \
+#--bsz 16 \
+#--n_epoch 200 \
+#--learning_rate 0.0002
+#
+#
+#python main.py --experiment 'default' \
+#--controller_type 'sgdm' \
+#--samples_path './samples/sgdm/' \
+#--model_path './models/sgdm/' \
+#--bsz 16 \
+#--n_epoch 200 \
+#--learning_rate 0.0002
+#
+#python main.py --experiment 'default' \
+#--controller_type 'adam' \
+#--samples_path './samples/adam/' \
+#--model_path './models/adam/' \
+#--bsz 16 \
+#--n_epoch 200 \
+#--learning_rate 0.0002
+#
+#python main.py --experiment 'default' \
+#--controller_type 'pid' \
+#--samples_path './samples/pid/' \
+#--model_path './models/pid/' \
+#--bsz 16 \
+#--n_epoch 200 \
+#--learning_rate 0.0002
+
+python main.py --experiment 'default' \
+--controller_type 'lpfsgd' \
+--samples_path './samples/lpfsgd/' \
+--model_path './models/lpfsgd/' \
+--bsz 16 \
+--n_epoch 200 \
+--learning_rate 0.0002
+
+python main.py --experiment 'default' \
+--controller_type 'hpfsgd' \
+--samples_path './samples/hpfsgd/' \
+--model_path './models/hpfsgd/' \
+--bsz 16 \
+--n_epoch 200 \
+--learning_rate 0.0002
+
+python main.py --experiment 'default' \
+--controller_type 'fuzzypid' \
+--samples_path './samples/fuzzypid/' \
+--model_path './models/fuzzypid/' \
+--bsz 16 \
+--n_epoch 200 \
+--learning_rate 0.0002
+
+python main.py --experiment 'default' \
+--controller_type 'kalmansgd' \
+--samples_path './samples/kalmansgd/' \
+--model_path './models/kalmansgd/' \
+--bsz 16 \
+--n_epoch 200 \
+--learning_rate 0.0002
+
+
+
+
+
+
+cd /home/kangchen/Controllable_AI/pytorch-mnist-GAN-master/CycleGAN/
+#python main.py --experiment 'default' \
+#--controller_type 'sgd' \
+#--samples_path './samples/sgd/' \
+#--model_path './models/sgd/' \
+#--bsz 16 \
+#--n_epoch 300 \
+#--learning_rate 0.0002
+#
+#python main.py --experiment 'default' \
+#--controller_type 'sgdm' \
+#--samples_path './samples/sgdm/' \
+#--model_path './models/sgdm/' \
+#--bsz 16 \
+#--n_epoch 300 \
+#--learning_rate 0.0002
+#
+#python main.py --experiment 'default' \
+#--controller_type 'adam' \
+#--samples_path './samples/adam/' \
+#--model_path './models/adam/' \
+#--bsz 16 \
+#--n_epoch 300 \
+#--learning_rate 0.0002
+#
+#python main.py --experiment 'default' \
+#--controller_type 'pid' \
+#--samples_path './samples/pid/' \
+#--model_path './models/pid/' \
+#--bsz 16 \
+#--n_epoch 300 \
+#--learning_rate 0.0002
+
+python main.py --experiment 'default' \
+--controller_type 'lpfsgd' \
+--samples_path './samples/lpfsgd/' \
+--model_path './models/lpfsgd/' \
+--bsz 16 \
+--n_epoch 300 \
+--learning_rate 0.0002
+
+python main.py --experiment 'default' \
+--controller_type 'hpfsgd' \
+--samples_path './samples/hpfsgd/' \
+--model_path './models/hpfsgd/' \
+--bsz 16 \
+--n_epoch 300 \
+--learning_rate 0.0002
+
+python main.py --experiment 'default' \
+--controller_type 'fuzzypid' \
+--samples_path './samples/fuzzypid/' \
+--model_path './models/fuzzypid/' \
+--bsz 16 \
+--n_epoch 300 \
+--learning_rate 0.0002
+
+python main.py --experiment 'default' \
+--controller_type 'kalmansgd' \
+--samples_path './samples/kalmansgd/' \
+--model_path './models/kalmansgd/' \
+--bsz 16 \
+--n_epoch 300 \
+--learning_rate 0.0002
+
+
+
