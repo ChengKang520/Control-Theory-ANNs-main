@@ -9,7 +9,7 @@ How to control ANNs within several seconds.
 ## 📰 News
 - [2024.05.09] Add denosing diffsion probabilistic models. 
 - [2024.02.18] Fist release of code. 
-- [2023.10.09] Code will be released in a few days (not too long). Please stay tuned or *watch this repo* for quick information.
+- [2023.10.09] Code will be released in a few weeks. Please stay tuned or *watch this repo* for quick information.
 
 
 
@@ -22,10 +22,6 @@ Based on the knowledge of control systems, designing proper optimisers (or contr
 
 ### 🔥🔥 Learning systems of most ANNs are control systems
 <font face="Black" size="4">(1)</font> Most ANNs present perfect consistent performance with their system response. <font face="Black" size="4">(2)</font> We can use proper optimisers to control and improve the learning process of most ANNs. 
-
-
-
-
 
 
 ### 🔥🔥🔥 The Optimiser should Match the Learning System
