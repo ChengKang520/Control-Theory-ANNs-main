@@ -19,6 +19,7 @@ source /home/kangchen/Controllable_AI/EnvControlAI/bin/activate
 cd /home/kangchen/Controllable_AI/CNN-pytorch/
 
 
+
 #python cifar10_main.py \
 #--controller_type 'sgd' \
 #--model_type 'vgg19' \
@@ -38,46 +39,46 @@ cd /home/kangchen/Controllable_AI/CNN-pytorch/
 #--n_epoch 200 \
 #--learning_rate 0.01 \
 #--experiment 'None'
-
-python cifar10_main.py \
---controller_type 'sgd' \
---model_type 'resnet50' \
---num_classes 200 \
---model_path 'models/TinyImageNet200/sgd/None/resnet50/' \
---bsz 128 \
---n_epoch 200 \
---learning_rate 0.01 \
---experiment 'None'
-
-python cifar10_main.py \
---controller_type 'sgd' \
---model_type 'resnet101' \
---num_classes 200 \
---model_path 'models/TinyImageNet200/sgd/None/resnet101/' \
---bsz 128 \
---n_epoch 200 \
---learning_rate 0.01 \
---experiment 'None'
-
-python cifar10_main.py \
---controller_type 'sgd' \
---model_type 'mobilenetv2' \
---num_classes 200 \
---model_path 'models/TinyImageNet200/sgd/None/mobilenetv2/' \
---bsz 128 \
---n_epoch 200 \
---learning_rate 0.01 \
---experiment 'None'
-
-python cifar10_main.py \
---controller_type 'sgd' \
---model_type 'efficientnet' \
---num_classes 200 \
---model_path 'models/TinyImageNet200/sgd/None/efficientnet/' \
---bsz 128 \
---n_epoch 200 \
---learning_rate 0.01 \
---experiment 'None'
+#
+#python cifar10_main.py \
+#--controller_type 'sgd' \
+#--model_type 'resnet50' \
+#--num_classes 200 \
+#--model_path 'models/TinyImageNet200/sgd/None/resnet50/' \
+#--bsz 128 \
+#--n_epoch 200 \
+#--learning_rate 0.01 \
+#--experiment 'None'
+#
+#python cifar10_main.py \
+#--controller_type 'sgd' \
+#--model_type 'resnet101' \
+#--num_classes 200 \
+#--model_path 'models/TinyImageNet200/sgd/None/resnet101/' \
+#--bsz 128 \
+#--n_epoch 200 \
+#--learning_rate 0.01 \
+#--experiment 'None'
+#
+#python cifar10_main.py \
+#--controller_type 'sgd' \
+#--model_type 'mobilenetv2' \
+#--num_classes 200 \
+#--model_path 'models/TinyImageNet200/sgd/None/mobilenetv2/' \
+#--bsz 128 \
+#--n_epoch 200 \
+#--learning_rate 0.01 \
+#--experiment 'None'
+#
+#python cifar10_main.py \
+#--controller_type 'sgd' \
+#--model_type 'efficientnet' \
+#--num_classes 200 \
+#--model_path 'models/TinyImageNet200/sgd/None/efficientnet/' \
+#--bsz 128 \
+#--n_epoch 200 \
+#--learning_rate 0.01 \
+#--experiment 'None'
 
 python cifar10_main.py \
 --controller_type 'sgd' \
@@ -88,3 +89,36 @@ python cifar10_main.py \
 --n_epoch 200 \
 --learning_rate 0.01 \
 --experiment 'None'
+
+
+python cifar10_main.py \
+--controller_type 'sgd' \
+--model_type 'densenet121' \
+--num_classes 200 \
+--model_path 'models/TinyImageNet200/sgd/CosineAnnealingLR/densenet121/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01 \
+--experiment 'CosineAnnealingLR'
+
+
+python cifar10_main.py \
+--controller_type 'sgd' \
+--model_type 'densenet121' \
+--num_classes 200 \
+--model_path 'models/TinyImageNet200/sgd/LinearLR/densenet121/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01 \
+--experiment 'LinearLR'
+
+
+python cifar10_main.py \
+--controller_type 'sgd' \
+--model_type 'densenet121' \
+--num_classes 200 \
+--model_path 'models/TinyImageNet200/sgd/ExponentialLR/densenet121/' \
+--bsz 128 \
+--n_epoch 200 \
+--learning_rate 0.01 \
+--experiment 'ExponentialLR'
